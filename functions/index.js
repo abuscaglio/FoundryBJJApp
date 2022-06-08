@@ -6,8 +6,8 @@ const mailTransport = nodemailer.createTransport({
     port: 465,
     secure: true, // upgrade later with STARTTLS
     auth: {
-      user: "foundrybjjsales@gmail.com",
-      pass: "PurpBJJ1987!",
+      user: "placeholder",
+      pass: "placeholder",
     },
   });
 
