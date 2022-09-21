@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react'
+import firebase, { auth } from 'firebase';
 import { StyleSheet, View, Modal, Text, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
 import { Card, Title, TextInput } from 'react-native-paper';
 import { FontAwesome } from 'expo-vector-icons';
@@ -7,6 +8,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 export function AddToCartModal({setAddToCartModal, itemDetails, setUserData}) {
 
     const [initLoad, setInitLoad] = useState(false);
+    const [itemName, setItemName] = useState(itemDetails.item_name);
     const [itemColor, setItemColor] = useState('');
     const [itemSize, setItemSize] = useState('');
     const [itemQty, setItemQty] = useState('1');
@@ -26,13 +28,19 @@ export function AddToCartModal({setAddToCartModal, itemDetails, setUserData}) {
       }, [initLoad, itemQty, photo]);
 
     const handleAddItemsToCart = () => {
+        const uid = firebase.auth().currentUser.uid;
+        const docRef = firebase.firestore().collection('users').doc(uid)
+        const iName = itemName
+
         let itemsObj = {
-            item_name: itemDetails.name,
+            item_name: itemDetails.item_name,
             item_color: itemColor,
             item_size: itemSize,
             item_qty: itemQty,
             total_price: totalPrice
         }
+
+        docRef.update({ shopping_cart: {[itemName]: itemsObj} });
     }
 
     const handleColorBtnStyle = (index) => {
@@ -204,7 +212,7 @@ export function AddToCartModal({setAddToCartModal, itemDetails, setUserData}) {
                                     <Text style={{fontSize:20, fontWeight:'bold'}}>Total Price: ${totalPrice}</Text>
                                 </View>
                                 <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', paddingBottom:20}}>
-                                    <TouchableOpacity style={{flex:.7, padding:10}}>
+                                    <TouchableOpacity style={{flex:.7, padding:10}} onPress={()=> {handleAddItemsToCart()}}>
                                         <View style={{padding:20, backgroundColor:'gray', borderRadius:5, alignItems:'center'}}>
                                             <Text style={{fontSize:17}}>Add Item(s) To Cart</Text>
                                         </View>

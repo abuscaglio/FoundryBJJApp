@@ -36,7 +36,6 @@ export default function RegisterPage() {
                setIsRegistering(false);
                
             }).catch((e) => {
-               console.log(e);
                setIsRegistering(false);
                alert('ERROR!', [
                 {text: 'okay'}
@@ -48,7 +47,6 @@ export default function RegisterPage() {
         })
         .catch((e) => {
             Alert.alert('ERROR', 'This is the error message', [{ text: 'Close' }]);
-            console.log(e);
             setIsRegistering(false);
         })  
     }

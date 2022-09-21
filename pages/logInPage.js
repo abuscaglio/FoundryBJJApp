@@ -24,7 +24,6 @@ const handleLogin = () => {
         Actions.loggedInParent()
     })
     .catch((e) => {
-        console.log(e);
         setIsLoggingIn(false);
     })
 }
@@ -68,7 +67,7 @@ const handleLogin = () => {
                             </TouchableOpacity>
                                 <Text style={{paddingTop:20}}>Not a member?</Text>
                                 <Button title="Register" onPress={() => Actions.signUp()}/>
-                                <Button title="Instructors" onPress={() => Actions.tabBar()}/>
+                                <Button title="Instructors" onPress={() => Actions.loggedInParent()}/>
                         </View>
                     </View>
                 </View>

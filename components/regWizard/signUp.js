@@ -85,7 +85,6 @@ export default function SignUpPage() {
 
         auth.createUserWithEmailAndPassword(email, password)
         .then((data) => {
-            console.log(data.user);
             firebase.firestore().collection('users').doc(data.user.uid).set({
                 first_name: firstName,
                 last_Name: lastName,
@@ -95,7 +94,8 @@ export default function SignUpPage() {
                 degree: degree,
                 years_training: yearsTraining,
                 profile_picture: profPicUuid,
-                date_registered: moment().format('MM/DD/YYYY')
+                date_registered: moment().format('MM/DD/YYYY'),
+                shopping_cart: null
             }).then((data) => {
                setIsRegistering(false);
             }).catch((e) => {
@@ -107,7 +107,6 @@ export default function SignUpPage() {
         })
         .catch((e) => {
             Alert.alert('ERROR', 'This is the error message', [{ text: 'Close' }]);
-            console.log(e);
             setIsRegistering(false);
         })  
         setIsRegistering(false);
