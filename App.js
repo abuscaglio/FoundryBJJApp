@@ -10,6 +10,8 @@ import Schedule from './pages/schedule';
 import { Marketplace } from './components/marketplace/marketplace';
 import { HamburgerNav } from './components/hamburgerNav';
 import { FontAwesome } from 'expo-vector-icons';
+import { Provider } from 'react-redux';
+import { store } from './redux/app-redux';
 
 export default function App() {
 
@@ -54,6 +56,7 @@ export default function App() {
   }, [])
   
   return (
+    <Provider store={store}>
     <AnimatedSplash
         translucent={true}
         isLoaded={isLoaded}
@@ -106,6 +109,7 @@ export default function App() {
         </Scene>
       </Router>
       </AnimatedSplash>
+      </Provider>
   );
 }
 

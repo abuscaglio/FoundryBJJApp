@@ -29,8 +29,7 @@ export function AddToCartModal({setAddToCartModal, itemDetails, setUserData}) {
 
     const handleAddItemsToCart = () => {
         const uid = firebase.auth().currentUser.uid;
-        const docRef = firebase.firestore().collection('users').doc(uid)
-        const iName = itemName
+        const docRef = firebase.firestore().collection('shopping_cart').doc(uid)
 
         let itemsObj = {
             item_name: itemDetails.item_name,
@@ -40,7 +39,7 @@ export function AddToCartModal({setAddToCartModal, itemDetails, setUserData}) {
             total_price: totalPrice
         }
 
-        docRef.update({ shopping_cart: {[itemName]: itemsObj} });
+        docRef.update({cart: firebase.firestore.FieldValue.arrayUnion(itemsObj)});
     }
 
     const handleColorBtnStyle = (index) => {

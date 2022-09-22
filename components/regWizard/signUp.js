@@ -73,6 +73,7 @@ export default function SignUpPage() {
     const userRegister = () => {
         setIsRegistering(true);
         let profPicUuid = null;
+        let userId = null;
 
         if (profilePicture) {
             const fileExtension = profilePicture.split('.').pop();
@@ -85,6 +86,8 @@ export default function SignUpPage() {
 
         auth.createUserWithEmailAndPassword(email, password)
         .then((data) => {
+            userId = data.user.uid;
+
             firebase.firestore().collection('users').doc(data.user.uid).set({
                 first_name: firstName,
                 last_Name: lastName,
@@ -96,7 +99,8 @@ export default function SignUpPage() {
                 profile_picture: profPicUuid,
                 date_registered: moment().format('MM/DD/YYYY'),
                 shopping_cart: null
-            }).then((data) => {
+            }).then(() => {
+               firebase.firestore().collection('shopping_cart').doc(userId).set({});
                setIsRegistering(false);
             }).catch((e) => {
                setIsRegistering(false);
@@ -108,7 +112,8 @@ export default function SignUpPage() {
         .catch((e) => {
             Alert.alert('ERROR', 'This is the error message', [{ text: 'Close' }]);
             setIsRegistering(false);
-        })  
+        })
+
         setIsRegistering(false);
         setRegModalDisplayed(true);
     }

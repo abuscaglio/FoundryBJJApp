@@ -1,11 +1,12 @@
 import { React, useState, useEffect } from "react";
-import { View, TouchableOpacity, SafeAreaView, StyleSheet } from "react-native"; 
+import { View, TouchableOpacity, SafeAreaView, StyleSheet, Text } from "react-native"; 
 import { Marketplace } from '../components/marketplace/marketplace';
 import { FontAwesome } from 'expo-vector-icons';
 import InstructorsPage from "./instructors";
 import firebase from 'firebase';
+import { connect } from "react-redux";
 
-export default function LoggedInParent() {
+    function LoggedInParent(props) {
 
     let [initLoad, setInitLoad] = useState(false);
     let [userData, setUserData] = useState([]);
@@ -127,3 +128,15 @@ const styles = StyleSheet.create({
         justifyContent:'center'
      }
 }) 
+
+const mapStateToProps = (state) => {
+    return {
+        userData: state.userData,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoggedInParent)
